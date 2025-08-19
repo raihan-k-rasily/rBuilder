@@ -17,3 +17,5 @@
 
 6. Setup URL for Components
     - install react-router-dom :  npm i react-router-dom
+7. Design Page
+8. Create state to store data in each user interaction page

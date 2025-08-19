@@ -5,14 +5,29 @@ import { Link } from 'react-router-dom';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import { FaFileDownload } from "react-icons/fa";
+import { FaHistory } from "react-icons/fa";
+import Edit from './Edit';
+
 
 
 function Preview() {
   return (
-    <div style={{marginTop:'100px'}}>
-
+    <>
+      <Stack direction={'row'} sx={{justifyContent:'flex-end'}}>
+        {/* DELETE */}
+        <button className='btn fs-3 text-primary'><FaFileDownload/></button>
+        {/* EDIT */}
+        <div>
+          <Edit/>
+        </div>
+        {/* HISTORY */}
+        <Link to={'/history'} className='btn fs-3 text-danger'><FaHistory /></Link>
+        {/* Back */}
+        <Link to={'/resume'} className='btn text-primary mt-2'>BACK</Link>
+      </Stack>
       <Box component="section">
-        <Paper elevation={3} sx={{ p: 2, textAlign: 'center' }}>
+        <Paper elevation={3} sx={{ my:2 , p: 5, textAlign: 'center' }}>
           <h2>Name</h2>
           <h6>Job Title</h6>
           <p><span>location</span>|<span>Email</span>|<span>Phone</span></p>
@@ -46,7 +61,7 @@ function Preview() {
         </Paper>
       </Box>
 
-    </div>
+    </>
   )
 }
 
