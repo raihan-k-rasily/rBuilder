@@ -11,7 +11,9 @@ import Edit from './Edit';
 
 
 
-function Preview() {
+function Preview({userInput}) {
+  // console.log(userInput);
+  
   return (
     <>
       <Stack direction={'row'} sx={{justifyContent:'flex-end'}}>
@@ -28,35 +30,29 @@ function Preview() {
       </Stack>
       <Box component="section">
         <Paper elevation={3} sx={{ my:2 , p: 5, textAlign: 'center' }}>
-          <h2>Name</h2>
-          <h6>Job Title</h6>
-          <p><span>location</span>|<span>Email</span>|<span>Phone</span></p>
+          <h2>{userInput.personalData.name}</h2>
+          <h6>{userInput.personalData.jobTitle}</h6>
+          <p><span>{userInput.personalData.location}</span>|<span>{userInput.personalData.email}</span>|<span>{userInput.personalData.phone}</span></p>
           <p>
-            <Link href={""}>Github</Link> |
-            <Link href={""}>LinkedIN</Link> |
-            <Link href={""}>Prfile</Link>
+            <Link href={userInput.personalData.github}>Github</Link> |
+            <Link href={userInput.personalData.linkedIn}>LinkedIn</Link> |
+            <Link href={userInput.personalData.portfolio}>Portfolio</Link>
           </p>
           <Divider sx={{ fontSize: '25px' }}>Summary</Divider>
-          <p className='fs-5 text-start'>user summary</p>
+          <p className='fs-5 text-start'>{userInput.summary}</p>
           <Divider sx={{ fontSize: '25px', marginBottom: '10px' }}>Education</Divider>
-          <h6>User Education</h6>
-          <p><span>College</span>|<span>University</span>|<span>Year</span></p>
+          <h6>{userInput.educationData.course}</h6>
+          <p><span>{userInput.educationData.college}</span>|<span>{userInput.educationData.university}</span>|<span>{userInput.educationData.year}</span></p>
           <Divider sx={{ fontSize: '25px', marginBottom: '10px' }}>Proffessional Experience</Divider>
-          <h6>User Job</h6>
-          <p><span>Company</span>|<span>Location</span>|<span>Duration</span></p>
+          <h6>{userInput.experienceData.jobRole}</h6>
+          <p><span>{userInput.experienceData.company}</span>|<span>{userInput.experienceData.jobLocation}</span>|<span>{userInput.experienceData.duration}</span></p>
           <Divider sx={{ fontSize: '25px', marginBottom: '10px' }}>Skills</Divider>
-          <Stack spacing={2} direction="row" sx={{flexWrap:'wrap' , gap: '10px'}}>
-            <Button className='ms-3' variant="contained">user Skill</Button>
-            <Button variant="contained">user Skill</Button>
-            <Button variant="contained">user Skill</Button>
-            <Button variant="contained">user Skill</Button>
-            <Button variant="contained">user Skill</Button>
-            <Button variant="contained">user Skill</Button>
-            <Button variant="contained">user Skill</Button>
-            <Button variant="contained">user Skill</Button>
-            <Button variant="contained">user Skill</Button>
-            <Button variant="contained">user Skill</Button>
-            <Button variant="contained">user Skill</Button>
+          <Stack spacing={2} direction="row" sx={{flexWrap:'wrap' , gap: '10px' }}>
+            {
+              userInput.skills?.map(skills=>(
+            <Button key={skills} variant="contained">{skills}</Button>
+          ))
+            }
           </Stack>
         </Paper>
       </Box>

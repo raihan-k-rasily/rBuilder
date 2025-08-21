@@ -9,38 +9,10 @@ import TextField from '@mui/material/TextField';
 
 const steps = ['Basic Informations', 'Contact Details', 'Education Details', 'Work Experience', 'Skills & Certificates', 'Review & Submit'];
 
-function Steps() {
+function Steps({userInput,setUserInput}) {
   const skillSuggestionArray = ['NODE JS','EXPRESS','MONGODB','REACT','ANGULAR','NEXT JS','BOOTSTRAP','TAILWIND','CSS','GIT']
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
-  // state for storing user input data
-  const [userInput , setUserInput] = React.useState({
-    personalData: {
-      name:'',
-      jobTitle:'',
-      location:'',
-      email:'',
-      phone:'' ,
-      github:'' ,
-      linkedIn:'',
-      portfolio:''
-    },
-    educationData:{
-      course:'',
-      college:"",
-      university:'',
-      year:''
-    },
-    experienceData:{
-      jobRole:'',
-      company:'',
-      jobLocation:'',
-      duration:''
-    },
-    skills:[],
-    summary:''
-  })
-  console.log(userInput);
 
   const userSkillRef = React.useRef()
   
@@ -170,16 +142,20 @@ function Steps() {
               ))
             }
           </div>
+          {
+              userInput.skills !="" &&
+            <>
           <h5>Added Skills :</h5>
           <div className="d-flex flex-wrap justify-contenet-between my-3">
           {
-            userInput.skills.length>0 ? userInput.skills.map(skill=>(
+            userInput.skills.length>0 && userInput.skills.map(skill=>(
               
             <span key={skill} className='btn btn-primary d-flex align-items-center justify-content-center m-1 '>{skill} <button onClick={()=>removeskill(skill)} className='text-light btn'>X</button></span>
-            )):
-            <span> NIL</span>
+            ))
           }
           </div>
+          </>
+          }
         </div>
       )
       case 5: return (
