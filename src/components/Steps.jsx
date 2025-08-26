@@ -6,10 +6,12 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
+import swal from 'sweetalert';
+import {addResumeAPI} from '../services/allAPI'
 
 const steps = ['Basic Informations', 'Contact Details', 'Education Details', 'Work Experience', 'Skills & Certificates', 'Review & Submit'];
 
-function Steps({userInput,setUserInput}) {
+function Steps({userInput,setUserInput,setFinish}) {
   const skillSuggestionArray = ['NODE JS','EXPRESS','MONGODB','REACT','ANGULAR','NEXT JS','BOOTSTRAP','TAILWIND','CSS','GIT']
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
@@ -68,7 +70,7 @@ function Steps({userInput,setUserInput}) {
       setUserInput({...userInput,skills:[...userInput.skills , inputSkill]})
     }
   }
-}
+  }
   const removeskill = (skill) =>{
       setUserInput({...userInput,skills: userInput.skills.filter(item=>item!=skill)})
   }
@@ -171,6 +173,26 @@ function Steps({userInput,setUserInput}) {
     }
   }
 
+  // addREsume
+  const handleAddResume = async ()=>{
+      const {name,jobTitle,location} = userInput.personalData
+      if(name && jobTitle && location){
+      // alert("API Called")
+
+        try{
+          const result = await addResumeAPI(userInput)
+          swal("Good job!", "RESUME ADDED SUCCESSFULLY!", "success");
+          setFinish(true)
+        }catch(err){
+          console.log(err);
+          swal("ERROR!!!", "RESUME ADDED FAILED!", "error");
+          setFinish(false)
+        }
+      }else{
+      alert("Fill the Personal Details Form")
+      }
+  }
+
   return (
     <Box sx={{ width: '100%' }}>
       <Stepper activeStep={activeStep}>
@@ -224,9 +246,14 @@ function Steps({userInput,setUserInput}) {
                 Skip
               </Button>
             )}
-            <Button onClick={handleNext}>
-              {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-            </Button>
+
+            {
+              activeStep === steps.length - 1 ? 
+              <Button onClick={handleAddResume} >Finish</Button>
+               :
+              <Button onClick={handleNext}> Next</Button>
+            }
+
           </Box>
         </React.Fragment>
       )}
