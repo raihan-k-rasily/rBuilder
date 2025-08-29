@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect , useState } from 'react'
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import { Link } from 'react-router-dom';
@@ -13,14 +13,19 @@ import { jsPDF } from "jspdf";
 import { addDownloadHistoryAPI } from '../services/allAPI'
 
 
-function Preview({ userInput, finish }) {
+function Preview({ setUserInput, resumeID, userInput, finish }) {
+
+  // const [updateResume,setUpdateResume] = useState({})
 
   // console.log(userInput);
 
-  // const [downloadStatus , setDownloadStatus] = useState(false)
 
 
   const [downloadStatus, setDownloadStatus] = React.useState(false)
+
+  // useEffect(()=>{
+  //   updateResume!={} && setUserInput(updateResume)
+  // },[updateResume])
 
   const downloadcv = async () => {
 
@@ -63,13 +68,13 @@ function Preview({ userInput, finish }) {
             <div className='d-flex justify-content-center align-items-center mt-5' style={{paddingTop:'300px'}}>
             {/* DOWNLOAD */}
             <button onClick={downloadcv} className='btn fs-3 text-primary'><FaFileDownload /></button>
+            {/* EDIT */}
+            <div>
+              <Edit setUpdateUserInput={setUserInput} resumeID={resumeID}/>
+            </div>
             {
               downloadStatus &&
               <>
-            {/* EDIT */}
-            <div>
-              <Edit />
-            </div>
             {/* HISTORY */}
             <Link to={'/history'} className='btn fs-3 text-danger'><FaHistory /></Link>
             </>

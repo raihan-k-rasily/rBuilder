@@ -11,7 +11,8 @@ import {addResumeAPI} from '../services/allAPI'
 
 const steps = ['Basic Informations', 'Contact Details', 'Education Details', 'Work Experience', 'Skills & Certificates', 'Review & Submit'];
 
-function Steps({userInput,setUserInput,setFinish}) {
+function Steps({setResumeID,userInput,setUserInput,setFinish}) {
+  
   const skillSuggestionArray = ['NODE JS','EXPRESS','MONGODB','REACT','ANGULAR','NEXT JS','BOOTSTRAP','TAILWIND','CSS','GIT']
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
@@ -164,7 +165,7 @@ function Steps({userInput,setUserInput,setFinish}) {
         <div>
           <h3>Professional Summary</h3>
           <div className='d-flex row p-3'>
-            <TextField id="standard-basic-summary" label="Write a short summary of yourself" multiline rows={4} defaultValue={'Dedicated and results-driven professional with a strong work ethic and proven ability to adapt in dynamic environments. Skilled in problem-solving, effective communication, and time management, with a focus on delivering high-quality outcomes. Adept at collaborating with diverse teams and leveraging new technologies to support organizational objectives. Committed to continuous learning and professional growth.'} variant="standard" onChange={e=>setUserInput({...userInput , summary :e.target.value})} value={userInput.summary} />
+            <TextField id="standard-basic-summary" label="Write a short summary of yourself" multiline rows={4} defaultValue={'Dedicated and results-driven professional with a strong work ethic and proven ability to adapt in dynamic environments. Skilled in problem-solving, effective communication, and time management, with a focus on delivering high-quality outcomes. Adept at collaborating with diverse teams and leveraging new technologies to support organizational objectives. Committed to continuous learning and professional growth.'} variant="standard" onChange={e=>setUserInput({...userInput , summary :e.target.value})} />
 
           </div>
         </div>
@@ -181,6 +182,8 @@ function Steps({userInput,setUserInput,setFinish}) {
 
         try{
           const result = await addResumeAPI(userInput)
+          console.log(result);
+          setResumeID(result?.data.id)
           swal("Good job!", "RESUME ADDED SUCCESSFULLY!", "success");
           setFinish(true)
         }catch(err){
